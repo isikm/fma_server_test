@@ -64,5 +64,42 @@ public class Service {
         return personDao.getAllPersons();
     }
     
+    //inserts new person  - returns JSON ok or not ok response
+    @GET
+    @Path("/savePerson/{fullName}/{age}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String saveNewPerson(@PathParam("fullName") String fullName, @PathParam("age") int age) {
+        Person person = new Person();
+        person.setFullName(fullName);
+        person.setAge(age);
+        
+        if (personDao.savePerson(person)) {
+            return "{\"status\":\"ok\"}";
+        }
+        else {
+            return "{\"status\":\"not ok\"}";     
+        }   
+               
+    }
+    
+    //updates an already existing person  - returns JSON ok or not ok response
+    @GET
+    @Path("/savePerson/{id}/{fullName}/{age}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String saveNewPerson(@PathParam("id") int id, @PathParam("fullName") String fullName, @PathParam("age") int age) {
+        Person person = new Person();
+        person.setId(id);
+        person.setFullName(fullName);
+        person.setAge(age);
+        
+        if (personDao.savePerson(person)) {
+            return "{\"status\":\"ok\"}";
+        }
+        else {
+            return "{\"status\":\"not ok\"}";     
+        }   
+               
+    }
+    
     
 }

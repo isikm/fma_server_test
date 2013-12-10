@@ -69,4 +69,35 @@ public class PersonDao {
         
         return persons;
     }
+    
+    // This method can both insert a new person and update existing one
+    public boolean savePerson(Person person) {
+        
+        Session session = null;
+        boolean hasErrors = false;
+        
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.saveOrUpdate(person);
+            session.getTransaction().commit();
+            
+        } catch (Exception ex){
+            
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            hasErrors = true;
+            
+        } finally {
+            
+            if (session != null) {
+                session.close();
+            }
+            
+        }       
+        
+        return !hasErrors;
+        
+    }
 }
