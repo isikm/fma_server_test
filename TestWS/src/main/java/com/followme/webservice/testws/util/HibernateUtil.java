@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.alphan.tryout.testws.util;
+package com.followme.webservice.testws.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

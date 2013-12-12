@@ -16,7 +16,7 @@
         <property name="show_sql">true</property>
         
         <!--Names of the entity classes-->
-        <mapping class="com.alphan.tryout.testws.model.Person"/>
+        <mapping class="com.followme.webservice.testws.model.Person"/>
 
         
     </session-factory>

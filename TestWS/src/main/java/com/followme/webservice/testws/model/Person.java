@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.alphan.tryout.testws.model;
+package com.followme.webservice.testws.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

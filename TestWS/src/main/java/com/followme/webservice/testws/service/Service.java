@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.alphan.tryout.testws.service;
+package com.followme.webservice.testws.service;
 
-import com.alphan.tryout.testws.dao.PersonDao;
-import com.alphan.tryout.testws.model.Person;
+import com.followme.webservice.testws.dao.PersonDao;
+import com.followme.webservice.testws.model.Person;
+
 import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;

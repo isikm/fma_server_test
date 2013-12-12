@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.alphan.tryout.testws.dao;
+package com.followme.webservice.testws.dao;
 
-import com.alphan.tryout.testws.model.Person;
-import com.alphan.tryout.testws.util.HibernateUtil;
+import com.followme.webservice.testws.model.Person;
+import com.followme.webservice.testws.util.HibernateUtil;
+
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
