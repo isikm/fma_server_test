@@ -42,6 +42,8 @@ public class Person {
         this.id = id;
     }
 
+    // cok sacma bir comment
+
     @XmlElement
     public String getFullName() {
         return fullName;
