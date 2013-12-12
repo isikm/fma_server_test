@@ -37,6 +37,8 @@ public class Service {
         }
     }
     */
+
+    // Insert test data in simulated database
     
     private PersonDao personDao = new PersonDao();
     
