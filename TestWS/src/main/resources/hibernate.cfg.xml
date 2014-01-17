@@ -17,6 +17,7 @@
         
         <!--Names of the entity classes-->
         <mapping class="com.followme.webservice.testws.model.Person"/>
+        <mapping class="com.followme.webservice.testws.model.Location"/>
 
         
     </session-factory>

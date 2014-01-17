@@ -4,7 +4,9 @@
  */
 package com.followme.webservice.testws.service;
 
+import com.followme.webservice.testws.dao.LocationDao;
 import com.followme.webservice.testws.dao.PersonDao;
+import com.followme.webservice.testws.model.Location;
 import com.followme.webservice.testws.model.Person;
 
 import java.util.List;
@@ -21,30 +23,11 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("service")
 public class Service {
-    /*
-    // should simulate a 'database'
-    private static Map<Integer, Person> persons = new HashMap<Integer, Person>();
-    
-    // Insert test data in simulated database
-    
-    static {
-        for (int i = 0; i < 10; i++) {
-            Person person = new Person();
-            int id = i + 1;
-            person.setId(id);
-            person.setFullName("Random Guy " + id);
-            person.setAge(new Random().nextInt(40) + 1);
-            
-            persons.put(id, person);
-        }
-    }
-    */
-
-    // gereksiz comment
-    
+        
     private PersonDao personDao = new PersonDao();
+    private LocationDao locationDao = new LocationDao();
     
-    // method which shoiuld return a single person object in XML format
+    // method which should return a single person object in XML format
     @GET
     @Path("/getPersonByIdXML/{id}")
     @Produces(MediaType.APPLICATION_XML)
@@ -105,5 +88,66 @@ public class Service {
                
     }
     
+    
+	// method which should return a single Location object in XML format
+    @GET
+    @Path("/getLocationByIdXML/{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public Location getLocationByIdXML(@PathParam("id")int id) { // pathparam is used to accept user defined parameters
+        return locationDao.getLocationById(id);
+    }
+    
+    // method which should return a single Location object in JSON format
+    @GET
+    @Path("/getLocationByIdJSON/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Location getLocationByIdJSON(@PathParam("id")int id) { // pathparam is used to accept user defined parameters
+        return locationDao.getLocationById(id);
+    }
+    
+    // method which should return a list of all Location objects in XML format
+    @GET
+    @Path("/getAllLocationsInXML")
+    @Produces(MediaType.APPLICATION_XML)
+    public List<Location> getAllLocationsInXML() { 
+        return locationDao.getAllLocations();
+    }
+    
+    //inserts new Location  - returns JSON ok or not ok response
+    @GET
+    @Path("/saveLocation/{locationName}/{locationCoordinate}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String saveNewLocation(@PathParam("locationName") String locationName, @PathParam("locationCoordinate") int locationCoordinate) {
+        Location location = new Location();
+        location.setLocationName(locationName);
+        location.setLocationCoordinate(locationCoordinate);
+        
+        if (locationDao.saveLocation(location)) {
+            return "{\"status\":\"ok\"}";
+        }
+        else {
+            return "{\"status\":\"not ok\"}";     
+        }   
+               
+    }
+    
+    //updates an already existing Location  - returns JSON ok or not ok response
+    @GET
+    @Path("/saveLocation/{id}/{locationName}/{locationCoordinate}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String saveNewLocation(@PathParam("id") int id, @PathParam("locationName") String locationName, @PathParam("locationCoordinate") int locationCoordinate) {
+        Location location = new Location();
+        location.setId(id);
+        location.setLocationName(locationName);
+        location.setLocationCoordinate(locationCoordinate);
+        
+        if (locationDao.saveLocation(location)) {
+            return "{\"status\":\"ok\"}";
+        }
+        else {
+            return "{\"status\":\"not ok\"}";     
+        }   
+               
+    }
     
 }
