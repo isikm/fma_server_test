@@ -53,7 +53,7 @@ public class Service {
     
     //inserts new person  - returns JSON ok or not ok response
     @GET
-    @Path("/savePerson/{fullName}/{age}")
+    @Path("/saveNewPerson/{fullName}/{age}")
     @Produces(MediaType.APPLICATION_JSON)
     public String saveNewPerson(@PathParam("fullName") String fullName, @PathParam("age") int age) {
         Person person = new Person();
@@ -71,16 +71,60 @@ public class Service {
     
     //updates an already existing person  - returns JSON ok or not ok response
     @GET
-    @Path("/savePerson/{id}/{fullName}/{age}")
+    @Path("/updatePerson/{id}/{fullName}/{age}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String saveNewPerson(@PathParam("id") int id, @PathParam("fullName") String fullName, @PathParam("age") int age) {
-        Person person = new Person();
-        person.setId(id);
-        person.setFullName(fullName);
-        person.setAge(age);
+    public String updatePerson(@PathParam("id") int id, @PathParam("fullName") String fullName, @PathParam("age") int age) {
+    	Person updatedPerson = personDao.getPersonById(id);
+    	updatedPerson.setId(id);
+    	updatedPerson.setFullName(fullName);
+    	updatedPerson.setAge(age);
         
-        if (personDao.savePerson(person)) {
+        if (personDao.updatePerson(updatedPerson)) {
             return "{\"status\":\"ok\"}";
+        }
+        else {
+            return "{\"status\":\"not ok\"}";     
+        }   
+               
+    }
+    
+    @GET
+    @Path("/setPersonLocation/{id}/{locationId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String setPersonLocation(@PathParam("id") int id, @PathParam("locationId") int locationId) {
+        Person updatedPerson = personDao.getPersonById(id);
+        updatedPerson.setUserLocation(locationDao.getLocationById(locationId));
+        
+        if (personDao.updatePerson(updatedPerson)) {
+            return "{\"status\":\"ok\"}";
+        }
+        else {
+            return "{\"status\":\"not ok\"}";     
+        }   
+               
+    }
+    
+    @GET
+    @Path("/addFollower/{id}/{followerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String addFollower(@PathParam("id") int id, @PathParam("followerId") int followerId) {
+        Person updatedPerson = personDao.getPersonById(id);
+        if (updatedPerson.addFollower(personDao.getPersonById(followerId)) && personDao.updatePerson(updatedPerson)) {
+            return "{\"status\":\"ok\"}";
+        }
+        else {
+            return "{\"status\":\"not ok\"}";     
+        }   
+               
+    }
+    
+    @GET
+    @Path("/removeFollower/{id}/{followerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String removeFollower(@PathParam("id") int id, @PathParam("followerId") int followerId) {
+        Person updatedPerson = personDao.getPersonById(id);
+        if (updatedPerson.removeFollower(personDao.getPersonById(followerId)) && personDao.updatePerson(updatedPerson)) {
+        	return "{\"status\":\"ok\"}";
         }
         else {
             return "{\"status\":\"not ok\"}";     

@@ -2,16 +2,9 @@ package com.followme.webservice.testws.dao;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.followme.webservice.testws.model.Location;
 import com.followme.webservice.testws.model.Location;
 import com.followme.webservice.testws.util.HibernateUtil;
 
@@ -75,7 +68,7 @@ public class LocationDao {
 		return Locations;
 	}
 
-	// This method can both insert a new Location and update existing one
+	// This method can insert a new Location
 	public boolean saveLocation(Location Location) {
 
 		Session session = null;
@@ -85,6 +78,36 @@ public class LocationDao {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			session.saveOrUpdate(Location);
+			session.getTransaction().commit();
+
+		} catch (Exception ex) {
+
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			hasErrors = true;
+
+		} finally {
+
+			if (session != null) {
+				session.close();
+			}
+
+		}
+
+		return !hasErrors;
+
+	}
+	
+	public boolean updateLocation(Location Location) {
+
+		Session session = null;
+		boolean hasErrors = false;
+
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.merge(Location);
 			session.getTransaction().commit();
 
 		} catch (Exception ex) {
